@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        databaseReference.child("Cliente").child("3").child("Nome").setValue("ze");
-        databaseReference.child("Cliente").child("3").child("Email").setValue("ze@email.com");
+
     }
 }

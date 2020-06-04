@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PUCantina</string>
+    <string name="email">e-mail</string>
+    <string name="nome">Nome</string>
+    <string name="telefone">Telefone</string>
+    <string name="curso">Curso</string>
+    <string name="cadastrar">Cadastrar</string>
 </resources>
