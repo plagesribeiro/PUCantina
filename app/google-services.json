@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "493348888317",
+    "firebase_url": "https://pucantina.firebaseio.com",
+    "project_id": "pucantina",
+    "storage_bucket": "pucantina.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493348888317:android:cc6eacfc0e42c4d3ad2894",
+        "android_client_info": {
+          "package_name": "com.plagesribeiro.pucantina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493348888317-735a8ocdcb3opmltp0pasj6fn9n4qdrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plagesribeiro.pucantina",
+            "certificate_hash": "9c00f1086bca4f41946ddcea2b96005e18e281fc"
+          }
+        },
+        {
+          "client_id": "493348888317-00qndam36d1tshp4f8s74h9b4vprcr2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHq3CZw5lOpyxd9igF1UMPBvhc3suOv3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493348888317-00qndam36d1tshp4f8s74h9b4vprcr2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
