@@ -1,8 +1,15 @@
 package com.plagesribeiro.pucantina;
 
 public class Usuario {
-    private String nome, email, telefone, curso, id;
+    private String nome, email, telefone, curso, id, senha;
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public Usuario () {}
 
