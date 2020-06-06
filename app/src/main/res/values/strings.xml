@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">PUCantina</string>
-    <string name="email">e-mail</string>
+    <string name="email">Email</string>
     <string name="nome">Nome</string>
     <string name="telefone">Telefone</string>
     <string name="curso">Curso</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="senha">Senha</string>
-    <string name="crud">CRUD</string>
+    <string name="login">Login</string>
+    <string name="guardarDados">Manter dados de login salvos</string>
+    <string name="checkbox_SharedPreferences">com.plagesribeiro.pucantina.checkbox_SharedPreferences</string>
+    <string name="email_SharedPreferences">com.plagesribeiro.pucantina.email_SharedPreferences</string>
+    <string name="senha_SharedPreferences">com.plagesribeiro.pucantina.senha_SharedPreferences</string>
+
 </resources>
