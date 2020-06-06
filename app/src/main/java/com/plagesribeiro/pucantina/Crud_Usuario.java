@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Crud_Usuario extends AppCompatActivity {
     private EditText edtEmail, edtNome, edtTelefone, edtCurso, edtSenha;
     private Button btnCadastrar;
+
     private DatabaseReference banco = FirebaseDatabase.getInstance().getReference();
 
 
@@ -44,7 +45,7 @@ public class Crud_Usuario extends AppCompatActivity {
                 String curso = edtCurso.getText().toString();
                 String senha = edtSenha.getText().toString();
 
-                if ((email != "" && nome != "" && telefone != "" && curso != "" && senha != "")) {
+                if ((email.equals("") == false && nome.equals("") == false && telefone.equals("") == false && curso.equals("") == false && senha.equals("") == false)) {
 
                     Usuario usuario = new Usuario();
 
@@ -58,6 +59,8 @@ public class Crud_Usuario extends AppCompatActivity {
 
                     Intent main = new Intent(Crud_Usuario.this, MainActivity.class);
                     startActivity(main);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Preencha todos os dados", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -70,11 +73,12 @@ public class Crud_Usuario extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String idUsuario = Base64.encodeToString(usuario.getEmail().getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
                 usuario.setId(idUsuario);
-                boolean contatoJaCadastrado = dataSnapshot.child("Usuario").hasChild(idUsuario);
-                if (contatoJaCadastrado) {
+
+                if (dataSnapshot.child("usuario").child(idUsuario).exists()) {
                     Toast.makeText(getApplicationContext(), "Usuario já cadastrado anteriormente.", Toast.LENGTH_SHORT).show();
                 } else {
-                    banco.child("Usuarios").child(idUsuario).setValue(usuario);
+                    banco.child("usuario").child(idUsuario).setValue(usuario);
+                    Toast.makeText(getApplicationContext(), "Usuario cadastrado com sucesso", Toast.LENGTH_SHORT).show();
                 }
             }
 
