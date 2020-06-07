@@ -1,10 +1,16 @@
 package com.plagesribeiro.pucantina;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.plagesribeiro.pucantina.ui.Carrinho;
+import com.plagesribeiro.pucantina.ui.Menu;
+import com.plagesribeiro.pucantina.ui.Perfil;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +31,27 @@ public class UserNavigation extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected (@NonNull MenuItem menuItem){
+                Fragment selectedFragment = null;
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_menu:
+                        selectedFragment = new Menu();
+                        break;
+                    case R.id.navigation_carrinho:
+                        selectedFragment = new Carrinho();
+                        break;
+                    case R.id.navigation_perfil:
+                        selectedFragment = new Perfil();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
+                return true;
+            }
+        });
+
     }
 
 }
