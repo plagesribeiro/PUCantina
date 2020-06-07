@@ -2,9 +2,17 @@ package com.plagesribeiro.pucantina;
 
 
 public class Produto {
-    private String valor, nome, descricao, imagem;
+    private String idProduto, valor, nome, descricao, imagem;
 
     public void Produto() {}
+
+    public String getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(String idProduto) {
+        this.idProduto = idProduto;
+    }
 
     public String getValor() {
         return valor;

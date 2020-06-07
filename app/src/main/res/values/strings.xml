@@ -7,7 +7,11 @@
     <string name="cadastrar">Cadastrar</string>
     <string name="senha">Senha</string>
     <string name="login">Login</string>
+    <string name="valor">Valor</string>
+    <string name="descricao">Descrição</string>
     <string name="guardarDados">Manter dados de login salvos</string>
+    <string name="buscarImagem">Buscar Imagem na Galeria</string>
+
     <string name="checkbox_SharedPreferences">com.plagesribeiro.pucantina.checkbox_SharedPreferences</string>
     <string name="email_SharedPreferences">com.plagesribeiro.pucantina.email_SharedPreferences</string>
     <string name="senha_SharedPreferences">com.plagesribeiro.pucantina.senha_SharedPreferences</string>
@@ -15,5 +19,11 @@
     <string name="title_menu">Menu</string>
     <string name="title_carrinho">Carrinho</string>
     <string name="title_perfil">Perfil</string>
+    <string name="title_activity_restaurante_navigation">MainActivity</string>
+    <string name="title_cadastrar_produto">Cadastrar Produto</string>
+    <string name="title_pedidos">Pedidos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">FRAGMENTO OK</string>
+
 
 </resources>
