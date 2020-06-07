@@ -11,5 +11,9 @@
     <string name="checkbox_SharedPreferences">com.plagesribeiro.pucantina.checkbox_SharedPreferences</string>
     <string name="email_SharedPreferences">com.plagesribeiro.pucantina.email_SharedPreferences</string>
     <string name="senha_SharedPreferences">com.plagesribeiro.pucantina.senha_SharedPreferences</string>
+    <string name="title_activity_user_navigation">UserNavigation</string>
+    <string name="title_menu">Menu</string>
+    <string name="title_carrinho">Carrinho</string>
+    <string name="title_perfil">Perfil</string>
 
 </resources>

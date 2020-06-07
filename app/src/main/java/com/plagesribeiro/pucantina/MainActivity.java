@@ -107,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
                             if(senhaValidacao.equals(senhaUsuario)){
                                 //Redirecionar para página do Menu
-                                Toast.makeText(getApplicationContext(), "Parabens", Toast.LENGTH_SHORT).show();
+                                Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
+                                startActivity(user_menu);
+
                             }else{
                                 Toast.makeText(getApplicationContext(), "Senha inválida", Toast.LENGTH_SHORT).show();
                             }
