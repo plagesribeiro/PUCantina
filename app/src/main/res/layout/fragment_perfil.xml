@@ -7,12 +7,20 @@
     tools:context=".ui.Perfil">
 
     <TextView
+        android:id="@+id/textView_Perfil_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
         android:id="@+id/textView_Perfil_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_Perfil_id" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,7 +36,7 @@
         android:id="@+id/textView_Perfil_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView_Perfil_nome" />
 
@@ -36,7 +44,7 @@
         android:id="@+id/textView_Perfil_telefone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView_Perfil_email" />
 
@@ -44,7 +52,7 @@
         android:id="@+id/textView_Perfil_curso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView_Perfil_telefone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

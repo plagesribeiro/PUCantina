@@ -32,9 +32,7 @@ public class Pedido extends Fragment {
     private Button botaoAtualizar;
     private ArrayAdapter<PedidoEntidade> adapter;
 
-    public Pedido() {
-        // Required empty public constructor
-    }
+    public Pedido() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class Pedido extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView_Pedidos);
         botaoAtualizar = (Button) view.findViewById(R.id.button_atualizar_id);
 
-        //idProduto, valor, nome, descricao, imagem;
         final Produto prod1 = new Produto();
         prod1.setIdProduto("ID prod1");
         prod1.setNome("Nome  prod1");
@@ -81,12 +78,9 @@ public class Pedido extends Fragment {
                             pedido.setHoraPedido(postSnapshot.child("horaPedido").getValue().toString());
                             pedido.setProdutos(postSnapshot.child("produtos").getValue());
 
-                            private String idPedido, valorTotal, horaPedido;
-                            private List<Produto> produtos = new ArrayList<Produto>();
+                            pedido.add(pedido);
 
-                            contatos.add(contato);
-
-                            contato = null;
+                            pedido = null;
                         }*/
 
                         for(int i=0 ; i<3 ; i++){
