@@ -126,7 +126,7 @@ public class CadastroProduto extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imagemAsBytes = baos.toByteArray();
 
-        UploadTask uploadTask = mountainsRef.putBytes(imagemAsBytes);
+        UploadTask uploadTask = mountainImagesRef.putBytes(imagemAsBytes);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
