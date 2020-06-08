@@ -1,6 +1,8 @@
 package com.plagesribeiro.pucantina.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +21,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.plagesribeiro.pucantina.Produto;
 import com.plagesribeiro.pucantina.R;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.Executor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -82,9 +96,10 @@ public class CadastroProduto extends Fragment {
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
                     produto.setValor(valor);
-                    produto.setImagem(nome);
+
 
                     cadastrarProduto(produto);
+                    cadastrarImagemProduto(imagem, nome);
 
 
                 }else{
@@ -94,8 +109,40 @@ public class CadastroProduto extends Fragment {
         });
     }
 
+    private void cadastrarImagemProduto(ImageView imagem, String nome) {
+
+        StorageReference storageRef ;
+        storageRef  = FirebaseStorage.getInstance().getReference();
+        StorageReference mountainsRef = storageRef.child(nome+".jpg");
+        StorageReference mountainImagesRef = storageRef.child("images/"+nome+".jpg");
+
+        //converte image view to bytes
+        imagem.setDrawingCacheEnabled(true);
+        imagem.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imagem.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imagemAsBytes = baos.toByteArray();
+
+        UploadTask uploadTask = mountainsRef.putBytes(imagemAsBytes);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getActivity(), "Foto NAO Subiu.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                Toast.makeText(getActivity(), "Foto Subiu.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void cadastrarProduto(final Produto produto) {
-        banco.addListenerForSingleValueEvent(new ValueEventListener() {
+       banco.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String idProduto = Base64.encodeToString(produto.getNome().getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
