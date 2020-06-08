@@ -11,9 +11,11 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +34,7 @@ public class Pedido extends Fragment {
     private ListView listView;
     private Button botaoAtualizar;
     private ArrayAdapter<PedidoEntidade> adapter;
+    private Button botaoDeletar;
 
     public Pedido() {
     }
@@ -49,6 +52,9 @@ public class Pedido extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.listView_Pedidos);
         botaoAtualizar = (Button) view.findViewById(R.id.button_atualizar_id);
+        botaoDeletar = view.findViewById(R.id.btn_deletar_banco);
+
+        botaoDeletar.setVisibility(View.GONE);
 
         final Produto prod1 = new Produto();
         prod1.setIdProduto("ID prod1");
@@ -61,6 +67,32 @@ public class Pedido extends Fragment {
         prod2.setNome("Nome  prod2");
         prod2.setDescricao("Desc prod2");
         prod2.setValor("preco prod2");
+
+        listView.setAdapter(null);
+
+        banco.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<PedidoEntidade> pedidos = new ArrayList<PedidoEntidade>();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.child("pedido").getChildren()) {
+                    PedidoEntidade pedido = postSnapshot.getValue(PedidoEntidade.class);
+
+                    pedidos.add(pedido);
+
+                    pedido = null;
+                }
+
+                adapter = new ArrayAdapter<PedidoEntidade>(getActivity(),android.R.layout.simple_list_item_1, pedidos);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         botaoAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +120,23 @@ public class Pedido extends Fragment {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final PedidoEntidade selectedItem = (PedidoEntidade) parent.getItemAtPosition(position);
+                botaoDeletar.setVisibility(View.VISIBLE);
+
+                botaoDeletar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), selectedItem.getValorTotal(), Toast.LENGTH_SHORT).show();
+                        banco.child("pedido").child(selectedItem.getIdPedido()).setValue(null);
+                        botaoDeletar.setVisibility(View.GONE);
                     }
                 });
             }
