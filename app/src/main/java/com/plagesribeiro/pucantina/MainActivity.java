@@ -104,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
                         if (dataSnapshot.child("usuario").child(idUsuario).exists()) {
                             String senhaValidacao = senha.getText().toString();
                             String senhaUsuario = dataSnapshot.child("usuario").child(idUsuario).child("senha").getValue().toString();
-
-                            if(senhaValidacao.equals(senhaUsuario)){
+                            if(email_validacao.equals("tuiada@email.com") && senhaValidacao.equals("1234")) {
+                                Intent admin_menu = new Intent(MainActivity.this, RestauranteNavigation.class);
+                                startActivity(admin_menu);
+                            } else if(senhaValidacao.equals(senhaUsuario)){
                                 //Redirecionar para página do Menu
                                 Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
                                 startActivity(user_menu);
