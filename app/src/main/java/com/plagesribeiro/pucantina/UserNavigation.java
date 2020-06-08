@@ -41,10 +41,12 @@ public class UserNavigation extends AppCompatActivity {
                         selectedFragment = new Menu();
                         break;
                     case R.id.navigation_carrinho:
-                        selectedFragment = new Carrinho();
+                        String idUser = getIntent().getStringExtra("id_User");
+                        selectedFragment = new Carrinho(idUser);
                         break;
                     case R.id.navigation_perfil:
-                        selectedFragment = new Perfil();
+                        String idUsuario = getIntent().getStringExtra("id_User");
+                        selectedFragment = new Perfil(idUsuario);
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();

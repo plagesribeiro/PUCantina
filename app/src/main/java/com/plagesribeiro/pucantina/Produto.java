@@ -1,10 +1,17 @@
 package com.plagesribeiro.pucantina;
 
 
+import androidx.annotation.NonNull;
+
 public class Produto {
     private String idProduto, valor, nome, descricao;
 
     public void Produto() {}
+
+    public String toString() {
+        String resp = nome+"\n"+valor+" reais";
+        return resp;
+    }
 
     public String getIdProduto() {
         return idProduto;

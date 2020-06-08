@@ -4,11 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Menu extends ListFragment {
+public class Menu extends Fragment {
 
     private DatabaseReference banco = FirebaseDatabase.getInstance().getReference().child("produto");
 
@@ -35,14 +37,13 @@ public class Menu extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View root = inflater.inflate(R.layout.fragment_menu, container, false);
+        // Inflate the layout for this fragment
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        super.onViewCreated(view, savedInstanceState);
         banco.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -68,24 +69,14 @@ public class Menu extends ListFragment {
                 String[] from={"Produto", "Image"};
 
                 int[] to={R.id.nameTxt, R.id.imageView1};
-                adapter=new SimpleAdapter(getActivity(), data, R.layout.listview_menu, from, to);
-                setListAdapter(adapter);
+                SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), data, R.layout.listview_menu, from, to);
+                ListView listView = getActivity().findViewById(R.id.listView_menu);
+                listView.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> av, View v, int pos, long id) {
-                Toast.makeText(getActivity(), data.get(pos).get("Produto"), Toast.LENGTH_SHORT).show();
             }
         });
     }

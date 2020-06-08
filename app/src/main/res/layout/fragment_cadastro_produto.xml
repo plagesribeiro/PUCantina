@@ -11,77 +11,75 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="@string/nome"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDescricao_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextValor_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="@string/valor"
         android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/imageProduto_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescricao_id" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextDescricao_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="@string/descricao"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextValor_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNome_id" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonBuscar_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#6200EE"
         android:text="@string/buscarImagem"
         android:textColor="#FFFEFE"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCadastrar_id"
         app:layout_constraintEnd_toEndOf="@+id/imageProduto_id"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/imageProduto_id"
-        app:layout_constraintTop_toBottomOf="@+id/imageProduto_id" />
+        app:layout_constraintStart_toStartOf="@+id/imageProduto_id" />
 
     <ImageButton
         android:id="@+id/imageProduto_id"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBuscar_id"
         app:layout_constraintEnd_toEndOf="@+id/editTextValor_id"
         app:layout_constraintStart_toStartOf="@+id/editTextValor_id"
-        app:layout_constraintTop_toBottomOf="@+id/editTextValor_id"
         app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <Button
         android:id="@+id/buttonCadastrar_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="#6200EE"
         android:text="@string/cadastrar"
         android:textColor="#F8F8F8"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/buttonBuscar_id"
-        app:layout_constraintStart_toStartOf="@+id/buttonBuscar_id"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBuscar_id" />
+        app:layout_constraintStart_toStartOf="@+id/buttonBuscar_id" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

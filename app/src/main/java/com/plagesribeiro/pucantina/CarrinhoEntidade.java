@@ -1,17 +1,15 @@
 package com.plagesribeiro.pucantina;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class PedidoEntidade{
-    private String idPedido, valorTotal, horaPedido, idUsuario;
+public class CarrinhoEntidade {
+    private String idCarrinho, valorTotal, idUsuario;
     private List<Produto> produtos = new ArrayList<Produto>();
 
     @Override
     public String toString() {
-        String resp = "IdPedido: "+idPedido +"\nHora Pedido: "+horaPedido;
+        String resp = "IdCarrinho: "+idCarrinho;
 
         int i = 1;
         for(Produto produto : produtos){
@@ -26,11 +24,7 @@ public class PedidoEntidade{
         return resp;
     }
 
-    public void PedidoEntidade() {
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-        horaPedido = formatter.format(date);
-    }
+    public void CarrinhoEntidade() {}
 
     public void setIdUsuario(String idUsuario){
         this.idUsuario = idUsuario;
@@ -40,12 +34,12 @@ public class PedidoEntidade{
         return this.idUsuario;
     }
 
-    public String getIdPedido() {
-        return idPedido;
+    public String getIdCarrinho() {
+        return idCarrinho;
     }
 
-    public void setIdPedido(String idPedido) {
-        this.idPedido = idPedido;
+    public void setIdCarrinho(String idCarrinho) {
+        this.idCarrinho = idCarrinho;
     }
 
     public String getValorTotal() {
@@ -55,15 +49,6 @@ public class PedidoEntidade{
     public void setValorTotal(String valorTotal) {
         this.valorTotal = valorTotal;
     }
-
-    public String getHoraPedido() {
-        return horaPedido;
-    }
-
-    public void setHoraPedido(String horaPedido) {
-        this.horaPedido =  horaPedido;
-    }
-
 
     public List<Produto> getProdutos() {
         return produtos;
@@ -84,5 +69,4 @@ public class PedidoEntidade{
             produtos.remove(produto);
         }
     }
-
 }
