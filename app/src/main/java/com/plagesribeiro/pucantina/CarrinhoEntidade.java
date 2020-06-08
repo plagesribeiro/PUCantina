@@ -43,11 +43,23 @@ public class CarrinhoEntidade {
     }
 
     public String getValorTotal() {
-        return valorTotal;
+        int soma = 0;
+
+        for(Produto produto : produtos){
+            soma = soma + Integer.parseInt(produto.getValor());
+        }
+
+        return valorTotal = Integer.toString(soma);
     }
 
-    public void setValorTotal(String valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setValorTotal() {
+        int soma = 0;
+
+        for(Produto produto : produtos){
+            soma = soma + Integer.parseInt(produto.getValor());
+        }
+
+        this.valorTotal = Integer.toString(soma);
     }
 
     public List<Produto> getProdutos() {

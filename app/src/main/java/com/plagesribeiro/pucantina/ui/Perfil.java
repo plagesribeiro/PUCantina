@@ -27,11 +27,11 @@ public class Perfil extends Fragment {
 
     private DatabaseReference banco = FirebaseDatabase.getInstance().getReference();
 
-    private String idUsuario;
     private TextView nome;
     private TextView email;
     private TextView telefone;
     private TextView curso;
+    private String idUsuario;
 
     public Perfil(String id) {
         idUsuario = id;

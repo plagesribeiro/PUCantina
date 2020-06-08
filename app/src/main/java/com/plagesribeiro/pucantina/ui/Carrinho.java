@@ -6,12 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +56,9 @@ public class Carrinho extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView_Carrinho);
         botaoFinalizar = (Button) view.findViewById(R.id.button_finalizar);
 
+        final CarrinhoEntidade carrinho = new CarrinhoEntidade();
+        final List produtos;
+
         listView.setAdapter(null);
 
         final Produto prod1 = new Produto();
@@ -68,18 +73,22 @@ public class Carrinho extends Fragment {
         prod2.setDescricao("Desc prod2");
         prod2.setValor("30");
 
+        carrinho.addProduto(prod1,1);
+        carrinho.addProduto(prod2,2);
+
+        produtos = carrinho.getProdutos();
+
         banco.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                CarrinhoEntidade carrinho = new CarrinhoEntidade();
+                String nomeCarrinho = dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString() + "Carrinho";
+                String idCarrinho = Base64.encodeToString(nomeCarrinho.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
 
-                carrinho.setIdCarrinho("sdfuysbdfj");
-                carrinho.setValorTotal("1 milhao de dolares");
+                carrinho.setIdCarrinho(idCarrinho);
+                carrinho.setValorTotal();
+                carrinho.setIdUsuario(idUsuario);
 
-                carrinho.addProduto(prod1,1);
-                carrinho.addProduto(prod2,2);
-
-                List produtos = carrinho.getProdutos();
+                banco.child("carrinho").child(idCarrinho).setValue(carrinho);
 
                 adapter = new ArrayAdapter<CarrinhoEntidade>(getActivity(),android.R.layout.simple_list_item_1,produtos);
                 listView.setAdapter(adapter);
@@ -94,6 +103,38 @@ public class Carrinho extends Fragment {
         botaoFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                banco.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String nomeCarrinho = dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString() + "Carrinho";
+                        String idCarrinho = Base64.encodeToString(nomeCarrinho.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
+
+                        String nomePedido = dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString() + "Pedido";
+                        String idPedido = Base64.encodeToString(nomePedido.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
+
+                        banco.child("carrinho").child(idCarrinho).setValue(null);
+
+                        PedidoEntidade pedido = new PedidoEntidade();
+                        Toast.makeText(getActivity(), pedido.getHoraPedido(), Toast.LENGTH_SHORT).show();
+                        pedido.fromCarrinho(carrinho, idPedido);
+
+                        banco.child("pedido").child(idPedido).setValue(pedido);
+                        banco.child("pedido").child(idPedido).child("horaPedido").setValue(pedido.getHoraPedido());
+
+                        pedido = null;
+
+                        List limpa = new ArrayList<Produto>();
+
+                        adapter = new ArrayAdapter<CarrinhoEntidade>(getActivity(),android.R.layout.simple_list_item_1,limpa);
+                        listView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
             }
         });
