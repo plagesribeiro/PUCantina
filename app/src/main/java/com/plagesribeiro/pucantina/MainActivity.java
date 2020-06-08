@@ -101,38 +101,23 @@ public class MainActivity extends AppCompatActivity {
                 banco.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Usuario usuario = new Usuario();
-                        Perfil perfil;
+
                         idUsuario = Base64.encodeToString(email_validacao.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
 
                         if (dataSnapshot.child("usuario").child(idUsuario).exists()) {
                             String senhaValidacao = senha.getText().toString();
                             String senhaUsuario = dataSnapshot.child("usuario").child(idUsuario).child("senha").getValue().toString();
+                            String nomeUsuario = dataSnapshot.child("usuario").child(idUsuario).child("nome").getValue().toString();
 
                             if(email_validacao.equals("admin@email.com") && senhaValidacao.equals("admin")) {
-
-
-                                /*perfil.setCurso("Nome do Restaurante sa");
-                                perfil.setEmail("admin@email.com");
-                                perfil.setNome("Dono do Restaurante");
-                                perfil.setTelefone("3333-3333");
-                                Perfil.receberPerfil(perfil);*/
-
-                                perfil = new Perfil(idUsuario);
                                 Intent admin_menu = new Intent(MainActivity.this, RestauranteNavigation.class);
-                                admin_menu.putExtra("id_User", idUsuario);
+                                admin_menu.putExtra("id_Usuario", idUsuario);
                                 startActivity(admin_menu);
-                            } else if(senhaValidacao.equals(senhaUsuario)){
-                                /*perfil.setCurso(dataSnapshot.child("usuario").child(idUsuario).child("curso").getValue().toString());
-                                perfil.setEmail(dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString());
-                                perfil.setNome(dataSnapshot.child("usuario").child(idUsuario).child("nome").getValue().toString());
-                                perfil.setTelefone(dataSnapshot.child("usuario").child(idUsuario).child("telefone").getValue().toString());
-                                Perfil.receberPerfil(perfil);*/
 
-                                perfil = new Perfil(idUsuario);
+                            } else if(senhaValidacao.equals(senhaUsuario)){
                                 //Redirecionar para página do Menu
                                 Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
-                                user_menu.putExtra("id_User", idUsuario);
+                                user_menu.putExtra("id_Usuario", idUsuario);
                                 startActivity(user_menu);
 
                             }else{

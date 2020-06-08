@@ -41,11 +41,11 @@ public class UserNavigation extends AppCompatActivity {
                         selectedFragment = new Menu();
                         break;
                     case R.id.navigation_carrinho:
-                        String idUser = getIntent().getStringExtra("id_User");
+                        String idUser = getIntent().getStringExtra("id_Usuario");
                         selectedFragment = new Carrinho(idUser);
                         break;
                     case R.id.navigation_perfil:
-                        String idUsuario = getIntent().getStringExtra("id_User");
+                        String idUsuario = getIntent().getStringExtra("id_Usuario");
                         selectedFragment = new Perfil(idUsuario);
                         break;
                 }

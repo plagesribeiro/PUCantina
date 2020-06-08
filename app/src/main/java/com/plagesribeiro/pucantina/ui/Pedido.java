@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,8 @@ public class Pedido extends Fragment {
     private Button botaoAtualizar;
     private ArrayAdapter<PedidoEntidade> adapter;
 
-    public Pedido() {}
+    public Pedido() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,37 +70,16 @@ public class Pedido extends Fragment {
                 banco.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         List<PedidoEntidade> pedidos = new ArrayList<PedidoEntidade>();
 
-                        /*for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            PedidoEntidade pedido = new PedidoEntidade();
-
-                            pedido.setIdPedido(postSnapshot.child("idPedido").getValue().toString());
-                            pedido.setValorTotal(postSnapshot.child("valorTotal").getValue().toString());
-                            pedido.setHoraPedido(postSnapshot.child("horaPedido").getValue().toString());
-                            pedido.setProdutos(postSnapshot.child("produtos").getValue());
-
-                            pedido.add(pedido);
-
-                            pedido = null;
-                        }*/
-
-                        for(int i=0 ; i<3 ; i++){
-                            PedidoEntidade pedido = new PedidoEntidade();
-
-                            pedido.setIdPedido("sdfuysbdfj");
-                            pedido.setValorTotal("1 milhao de dolares");
-                            pedido.setHoraPedido("hora de dar tchau");
-                            pedido.addProduto(prod1,2);
-                            pedido.addProduto(prod2,2);
-
-                            pedido.removeProduto(prod2,1);
+                        for (DataSnapshot postSnapshot : dataSnapshot.child("pedido").getChildren()) {
+                            PedidoEntidade pedido = postSnapshot.getValue(PedidoEntidade.class);
 
                             pedidos.add(pedido);
 
                             pedido = null;
                         }
-
 
                         adapter = new ArrayAdapter<PedidoEntidade>(getActivity(),android.R.layout.simple_list_item_1, pedidos);
                         listView.setAdapter(adapter);

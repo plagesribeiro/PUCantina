@@ -74,6 +74,7 @@ public class CadastroProduto extends Fragment {
         btnBuscarFoto = view.findViewById(R.id.buttonBuscar_id);
         btnCadastrarProduto = view.findViewById(R.id.buttonCadastrar_id);
         imagem = view.findViewById(R.id.imageProduto_id);
+
         btnBuscarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +82,7 @@ public class CadastroProduto extends Fragment {
 
             }
         });
+
         btnCadastrarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,13 +131,13 @@ public class CadastroProduto extends Fragment {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Toast.makeText(getActivity(), "Foto NAO Subiu.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Foto não cadastrada.", Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                Toast.makeText(getActivity(), "Foto Subiu.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Foto cadastrada com sucesso.", Toast.LENGTH_SHORT).show();
             }
         });
 
