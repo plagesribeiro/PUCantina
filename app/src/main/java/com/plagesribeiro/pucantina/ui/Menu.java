@@ -4,6 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.plagesribeiro.pucantina.PedidoEntidade;
 import com.plagesribeiro.pucantina.Produto;
 import com.plagesribeiro.pucantina.R;
 
@@ -25,68 +29,70 @@ import java.util.List;
 
 public class Menu extends ListFragment {
 
-    private DatabaseReference banco = FirebaseDatabase.getInstance().getReference().child("produto");
+    private DatabaseReference banco = FirebaseDatabase.getInstance().getReference();
 
-    int[] images={R.drawable.herera,R.drawable.costa,R.drawable.mata,R.drawable.degea,R.drawable.thibaut,R.drawable.vanpersie,R.drawable.oscar};
+    private ListView listView;
 
-    public ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-    public SimpleAdapter adapter;
-    public List<Produto> produtos = new ArrayList<Produto>();
-    @Nullable
+    private ArrayAdapter<Produto> adapter;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_menu, container, false);
+        // Inflate the layout for this fragment
+        return root;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        List<Produto> produtos;
 
-        super.onViewCreated(view, savedInstanceState);
-        banco.addValueEventListener(new ValueEventListener() {
+        listView = (ListView) view.findViewById(R.id.listView_Menu);
+
+        final Produto prod1 = new Produto();
+        prod1.setIdProduto("ID prod1");
+        prod1.setNome("Nome  prod1");
+        prod1.setDescricao("Desc prod1");
+        prod1.setValor("20");
+
+        final Produto prod2 = new Produto();
+        prod2.setIdProduto("ID prod2");
+        prod2.setNome("Nome  prod2");
+        prod2.setDescricao("Desc prod2");
+        prod2.setValor("30");
+
+        listView.setAdapter(null);
+
+        banco.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Produto> produtos = new ArrayList<Produto>();
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Produto produto = new Produto();
-                    produto.setNome(ds.child("nome").getValue().toString());
-                    produto.setValor(ds.child("valor").getValue().toString());
-                    produtos.add(produto);
-                    produto = null;
-                }
-                Toast.makeText(getActivity(), produtos.get(0).getNome(), Toast.LENGTH_SHORT).show();
-                HashMap<String, String> map = new HashMap<String, String>();
+                        /*for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            PedidoEntidade pedido = new PedidoEntidade();
 
-                for(int i = 0; i < produtos.size(); i++) {
-                    map = new HashMap<String, String>();
-                    map.put("Produto", produtos.get(i).getNome());
-                    map.put("Image", Integer.toString(images[i]));
+                            pedido.setIdPedido(postSnapshot.child("idPedido").getValue().toString());
+                            pedido.setValorTotal(postSnapshot.child("valorTotal").getValue().toString());
+                            pedido.setHoraPedido(postSnapshot.child("horaPedido").getValue().toString());
+                            pedido.setProdutos(postSnapshot.child("produtos").getValue());
 
-                    data.add(map);
-                }
+                            pedido.add(pedido);
 
-                String[] from={"Produto", "Image"};
+                            pedido = null;
+                        }*/
 
-                int[] to={R.id.nameTxt, R.id.imageView1};
-                adapter=new SimpleAdapter(getActivity(), data, R.layout.listview_menu, from, to);
-                setListAdapter(adapter);
+
+                produtos.add(prod1);
+                produtos.add(prod2);
+
+                adapter = new ArrayAdapter<Produto>(getActivity(),android.R.layout.simple_list_item_1, produtos);
+                listView.setAdapter(adapter);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> av, View v, int pos, long id) {
-                Toast.makeText(getActivity(), data.get(pos).get("Produto"), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
