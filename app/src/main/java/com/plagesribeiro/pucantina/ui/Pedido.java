@@ -56,14 +56,12 @@ public class Pedido extends Fragment {
         prod1.setNome("Nome  prod1");
         prod1.setDescricao("Desc prod1");
         prod1.setValor("preco prod1");
-        prod1.setImagem("imagem prod1");
 
         final Produto prod2 = new Produto();
         prod2.setIdProduto("ID prod2");
         prod2.setNome("Nome  prod2");
         prod2.setDescricao("Desc prod2");
         prod2.setValor("preco prod2");
-        prod2.setImagem("imagem prod2");
 
         botaoAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +74,15 @@ public class Pedido extends Fragment {
                         List<PedidoEntidade> pedidos = new ArrayList<PedidoEntidade>();
 
                         /*for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            Contato contato = new Contato();
+                            PedidoEntidade pedido = new PedidoEntidade();
 
-                            contato.setNome(postSnapshot.child("nome").getValue().toString());
-                            contato.setEmail(postSnapshot.child("email").getValue().toString());
-                            contato.setEndereco(postSnapshot.child("endereco").getValue().toString());
-                            contato.setCep(postSnapshot.child("cep").getValue().toString());
-                            contato.setTelefone(postSnapshot.child("telefone").getValue().toString());
-                            contato.setNascimento(postSnapshot.child("nascimento").getValue().toString());
+                            pedido.setIdPedido(postSnapshot.child("idPedido").getValue().toString());
+                            pedido.setValorTotal(postSnapshot.child("valorTotal").getValue().toString());
+                            pedido.setHoraPedido(postSnapshot.child("horaPedido").getValue().toString());
+                            pedido.setProdutos(postSnapshot.child("produtos").getValue());
+
+                            private String idPedido, valorTotal, horaPedido;
+                            private List<Produto> produtos = new ArrayList<Produto>();
 
                             contatos.add(contato);
 
