@@ -3,13 +3,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.plagesribeiro.pucantina.ListAdapter;
 import com.plagesribeiro.pucantina.Produto;
 import com.plagesribeiro.pucantina.R;
-import com.plagesribeiro.pucantina.listViewMenuAdapter;
+import com.plagesribeiro.pucantina.ListViewMenuAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,22 +42,22 @@ public class Menu extends Fragment {
     public SimpleAdapter adapter;
     public List<Produto> produtos = new ArrayList<Produto>();
     private RecyclerView mRecycleview;
-    private List<listViewMenuAdapter> mList = new ArrayList<>();
+    private List<ListViewMenuAdapter> mList = new ArrayList<>();
     private ListAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
+        init(root);
+        addList();
+        adapter();
         // Inflate the layout for this fragment
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        init(view);
-        addList();
-        adapter();
         storageRef  = FirebaseStorage.getInstance().getReference();
 
         banco.addValueEventListener(new ValueEventListener() {
@@ -71,7 +71,7 @@ public class Menu extends Fragment {
                     produto = null;
                 }
 
-                HashMap<String, String> map = new HashMap<String, String>();
+
 
                 File localFile = null;
                 try {
@@ -98,54 +98,19 @@ public class Menu extends Fragment {
                         }
                     });
                 }
-
-                /*for(int i = 0; i < produtos.size(); i++) {
-                    storageRef.child("images/"+produtos.get(i).getNome()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Toast.makeText(getActivity(), "Ta fazeno foto", Toast.LENGTH_SHORT).show();
-                            // Got the download URL for 'users/me/profile.png'
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getActivity(), exception.toString(), Toast.LENGTH_SHORT).show();
-                            // Handle any errors
-                        }
-                    });
-                }*/
-
-
-                /*for(int i = 0; i < produtos.size(); i++) {
-                    map = new HashMap<String, String>();
-                    map.put("Produto", produtos.get(i).getNome());
-                    map.put("Image", Integer.toString(images[i]));
-
-                    data.add(map);
-                }
-
-                String[] from={"Produto", "Image"};
-
-                int[] to={R.id.textView_NomeProduto, R.id.imageView_fotoProduto};
-
-                SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), data, R.layout.listview_menu, from, to);
-                ListView listView = getActivity().findViewById(R.id.listView_menu);
-                listView.setAdapter(adapter);*/
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
 
     private void init(View view){
-        mRecycleview = view.findViewById(R.id.recyclierView);
+        mRecycleview = (RecyclerView) view.findViewById(R.id.recyclierView);
     }
 
     private void addList(){
-        listViewMenuAdapter itemAdapter = new listViewMenuAdapter();
+        ListViewMenuAdapter itemAdapter = new ListViewMenuAdapter();
         itemAdapter.setImage(R.drawable.coxinha);
         itemAdapter.setNome("Tomato");
         itemAdapter.setPreco("Tomato");
@@ -153,9 +118,8 @@ public class Menu extends Fragment {
     }
 
     private void adapter(){
-
-
         mAdapter = new ListAdapter(mList, getActivity());
+        mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycleview.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

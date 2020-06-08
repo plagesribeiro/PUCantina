@@ -1,9 +1,13 @@
 package com.plagesribeiro.pucantina;
 
-public class listViewMenuAdapter {
+public class ListViewMenuAdapter {
     private static int image;
     private static String nome;
     private static String preco;
+
+    public ListViewMenuAdapter() {
+
+    }
 
     public static int getImage() {
         return image;

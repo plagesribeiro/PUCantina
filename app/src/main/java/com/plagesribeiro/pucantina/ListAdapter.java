@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ListAdapter<ItemAdapter> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ItemAdapter> mList;
+public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<ListViewMenuAdapter> mList;
     private Context mContext;
-    public ListAdapter(List<ItemAdapter> list, Context context){
+    public ListAdapter(List<ListViewMenuAdapter> list, Context context){
         super();
         mList = list;
         mContext = context;
@@ -29,7 +29,7 @@ public class ListAdapter<ItemAdapter> extends RecyclerView.Adapter<RecyclerView.
     }
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        ItemAdapter itemAdapter = mList.get(position);
+        ListViewMenuAdapter listViewMenuAdapter = mList.get(position);
         ((ViewHolder) viewHolder).mTv_name.setText(listViewMenuAdapter.getNome());
         ((ViewHolder) viewHolder).mTv_preco.setText(listViewMenuAdapter.getPreco());
         ((ViewHolder) viewHolder).mImg.setImageResource(listViewMenuAdapter.getImage());
@@ -45,7 +45,7 @@ public class ListAdapter<ItemAdapter> extends RecyclerView.Adapter<RecyclerView.
         public ViewHolder(View itemView) {
             super(itemView);
             mTv_name = (TextView) itemView.findViewById(R.id.textView_NomeProduto);
-            mTv_name = (TextView) itemView.findViewById(R.id.textView_PrecoProduto);
+            mTv_preco = (TextView) itemView.findViewById(R.id.textView_PrecoProduto);
             mImg = (ImageView) itemView.findViewById(R.id.imageView_fotoProduto);
         }
     }
