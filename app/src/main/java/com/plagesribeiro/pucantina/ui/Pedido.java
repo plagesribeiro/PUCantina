@@ -76,14 +76,15 @@ public class Pedido extends Fragment {
                         List<PedidoEntidade> pedidos = new ArrayList<PedidoEntidade>();
 
                         /*for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            Contato contato = new Contato();
+                            PedidoEntidade pedido = new PedidoEntidade();
 
-                            contato.setNome(postSnapshot.child("nome").getValue().toString());
-                            contato.setEmail(postSnapshot.child("email").getValue().toString());
-                            contato.setEndereco(postSnapshot.child("endereco").getValue().toString());
-                            contato.setCep(postSnapshot.child("cep").getValue().toString());
-                            contato.setTelefone(postSnapshot.child("telefone").getValue().toString());
-                            contato.setNascimento(postSnapshot.child("nascimento").getValue().toString());
+                            pedido.setIdPedido(postSnapshot.child("idPedido").getValue().toString());
+                            pedido.setValorTotal(postSnapshot.child("valorTotal").getValue().toString());
+                            pedido.setHoraPedido(postSnapshot.child("horaPedido").getValue().toString());
+                            pedido.setProdutos(postSnapshot.child("produtos").getValue());
+
+                            private String idPedido, valorTotal, horaPedido;
+                            private List<Produto> produtos = new ArrayList<Produto>();
 
                             contatos.add(contato);
 

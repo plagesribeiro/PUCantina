@@ -47,7 +47,8 @@ public class RestauranteNavigation extends AppCompatActivity {
                         selectedFragment = new Pedido();
                         break;
                     case R.id.navigation_perfil:
-                        selectedFragment = new Perfil();
+                        String idUsuario = getIntent().getStringExtra("id_User");
+                        selectedFragment = new Perfil(idUsuario);
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_restaurante, selectedFragment).commit();

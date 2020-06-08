@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.plagesribeiro.pucantina.ui.Perfil;
 
 import java.util.EventListener;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private Button btn_Cadastrar;
     private Button btn_Login;
+
+    private String idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,17 +102,37 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Usuario usuario = new Usuario();
-                        String idUsuario = Base64.encodeToString(email_validacao.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
+                        Perfil perfil;
+                        idUsuario = Base64.encodeToString(email_validacao.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
 
                         if (dataSnapshot.child("usuario").child(idUsuario).exists()) {
                             String senhaValidacao = senha.getText().toString();
                             String senhaUsuario = dataSnapshot.child("usuario").child(idUsuario).child("senha").getValue().toString();
-                            if(email_validacao.equals("tuiada@email.com") && senhaValidacao.equals("1234")) {
+
+                            if(email_validacao.equals("admin@email.com") && senhaValidacao.equals("admin")) {
+
+
+                                /*perfil.setCurso("Nome do Restaurante sa");
+                                perfil.setEmail("admin@email.com");
+                                perfil.setNome("Dono do Restaurante");
+                                perfil.setTelefone("3333-3333");
+                                Perfil.receberPerfil(perfil);*/
+
+                                perfil = new Perfil(idUsuario);
                                 Intent admin_menu = new Intent(MainActivity.this, RestauranteNavigation.class);
+                                admin_menu.putExtra("id_User", idUsuario);
                                 startActivity(admin_menu);
                             } else if(senhaValidacao.equals(senhaUsuario)){
+                                /*perfil.setCurso(dataSnapshot.child("usuario").child(idUsuario).child("curso").getValue().toString());
+                                perfil.setEmail(dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString());
+                                perfil.setNome(dataSnapshot.child("usuario").child(idUsuario).child("nome").getValue().toString());
+                                perfil.setTelefone(dataSnapshot.child("usuario").child(idUsuario).child("telefone").getValue().toString());
+                                Perfil.receberPerfil(perfil);*/
+
+                                perfil = new Perfil(idUsuario);
                                 //Redirecionar para página do Menu
                                 Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
+                                user_menu.putExtra("id_User", idUsuario);
                                 startActivity(user_menu);
 
                             }else{
@@ -130,10 +153,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         pref = getSharedPreferences("com.plagesribeiro.pucantina", Context.MODE_PRIVATE);
         edit = pref.edit();
 
         checkSharedPreferences();
+    }
+
+    public String getIdUsuario(){
+        return idUsuario;
     }
 
     private void checkSharedPreferences(){
