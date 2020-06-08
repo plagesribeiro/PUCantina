@@ -56,14 +56,12 @@ public class Pedido extends Fragment {
         prod1.setNome("Nome  prod1");
         prod1.setDescricao("Desc prod1");
         prod1.setValor("preco prod1");
-        prod1.setImagem("imagem prod1");
 
         final Produto prod2 = new Produto();
         prod2.setIdProduto("ID prod2");
         prod2.setNome("Nome  prod2");
         prod2.setDescricao("Desc prod2");
         prod2.setValor("preco prod2");
-        prod2.setImagem("imagem prod2");
 
         botaoAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
