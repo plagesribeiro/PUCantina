@@ -60,27 +60,7 @@ public class Carrinho extends Fragment {
         botaoDeletar = view.findViewById(R.id.button_deletarDoCarrinho);
         botaoDeletar.setVisibility(View.GONE);
 
-        final CarrinhoEntidade carrinho = new CarrinhoEntidade();
-        final List produtos;
-
         listView.setAdapter(null);
-
-        final Produto prod1 = new Produto();
-        prod1.setIdProduto("ID prod1");
-        prod1.setNome("kibe");
-        prod1.setDescricao("Desc prod1");
-        prod1.setValor("25");
-
-        final Produto prod2 = new Produto();
-        prod2.setIdProduto("ID prod2");
-        prod2.setNome("feijao");
-        prod2.setDescricao("Desc prod2");
-        prod2.setValor("30");
-
-        carrinho.addProduto(prod1,1);
-        carrinho.addProduto(prod2,2);
-
-        produtos = carrinho.getProdutos();
 
         banco.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -88,14 +68,17 @@ public class Carrinho extends Fragment {
                 String nomeCarrinho = dataSnapshot.child("usuario").child(idUsuario).child("email").getValue().toString() + "Carrinho";
                 String idCarrinho = Base64.encodeToString(nomeCarrinho.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)", "");
 
-                carrinho.setIdCarrinho(idCarrinho);
-                carrinho.setValorTotal();
-                carrinho.setIdUsuario(idUsuario);
+                if(dataSnapshot.child("carrinho").child(idCarrinho).getValue() == null){
+                    CarrinhoEntidade carrinho = new CarrinhoEntidade();
+                    carrinho.setIdUsuario(idUsuario);
+                    carrinho.setIdCarrinho(idCarrinho);
+                    banco.child("carrinho").child(idCarrinho).setValue(carrinho);
+                    atualizaListView();
+                }else{
+                    atualizaListView();
+                }
 
-                banco.child("carrinho").child(idCarrinho).setValue(carrinho);
 
-                adapter = new ArrayAdapter<CarrinhoEntidade>(getActivity(),android.R.layout.simple_list_item_1,produtos);
-                listView.setAdapter(adapter);
             }
 
             @Override
@@ -198,10 +181,11 @@ public class Carrinho extends Fragment {
                 listView.setAdapter(null);
                 List listaProdutos;
                 CarrinhoEntidade carrinhoAtualizar = dataSnapshot.child("carrinho").child(idCarrinho).getValue(CarrinhoEntidade.class);
-                listaProdutos = carrinhoAtualizar.getProdutos();
 
+                listaProdutos = carrinhoAtualizar.getProdutos();
                 adapter = new ArrayAdapter<CarrinhoEntidade>(getActivity(),android.R.layout.simple_list_item_1,listaProdutos);
                 listView.setAdapter(adapter);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

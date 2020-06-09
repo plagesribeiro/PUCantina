@@ -56,18 +56,6 @@ public class Pedido extends Fragment {
 
         botaoDeletar.setVisibility(View.GONE);
 
-        /*final Produto prod1 = new Produto();
-        prod1.setIdProduto("ID prod1");
-        prod1.setNome("Nome  prod1");
-        prod1.setDescricao("Desc prod1");
-        prod1.setValor("preco prod1");
-
-        final Produto prod2 = new Produto();
-        prod2.setIdProduto("ID prod2");
-        prod2.setNome("Nome  prod2");
-        prod2.setDescricao("Desc prod2");
-        prod2.setValor("preco prod2");*/
-
         listView.setAdapter(null);
 
         banco.addListenerForSingleValueEvent(new ValueEventListener() {
