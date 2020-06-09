@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private Button btn_Cadastrar;
     private Button btn_Login;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private String idUsuario;
 
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //salvar preferencia da checkbox
-                if(checkBox.isChecked()){
+                if (checkBox.isChecked()) {
                     //setar checkbox quando o app comeca
                     edit.putString(getString(R.string.checkbox_SharedPreferences), "True");
                     edit.commit();
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     edit.putString(getString(R.string.senha_SharedPreferences), senha_SharedPreferences);
                     edit.commit();
 
-                }else{
+                } else {
                     //setar checkbox quando o app comeca
                     edit.putString(getString(R.string.checkbox_SharedPreferences), "False");
                     edit.commit();
@@ -109,22 +114,18 @@ public class MainActivity extends AppCompatActivity {
                             String senhaUsuario = dataSnapshot.child("usuario").child(idUsuario).child("senha").getValue().toString();
                             String nomeUsuario = dataSnapshot.child("usuario").child(idUsuario).child("nome").getValue().toString();
 
-                            if(email_validacao.equals("admin@email.com") && senhaValidacao.equals("admin")) {
-                                Intent admin_menu = new Intent(MainActivity.this, RestauranteNavigation.class);
-                                admin_menu.putExtra("id_Usuario", idUsuario);
-                                startActivity(admin_menu);
+                            if (email_validacao.equals("admin@email.com") && senhaValidacao.equals("admin")) {
+                                signInAnonymously(false);
 
-                            } else if(senhaValidacao.equals(senhaUsuario)){
+                            } else if (senhaValidacao.equals(senhaUsuario)) {
                                 //Redirecionar para página do Menu
-                                Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
-                                user_menu.putExtra("id_Usuario", idUsuario);
-                                startActivity(user_menu);
+                                signInAnonymously(true);
 
-                            }else{
+                            } else {
                                 Toast.makeText(getApplicationContext(), "Senha inválida", Toast.LENGTH_SHORT).show();
                             }
 
-                        }else{
+                        } else {
                             Toast.makeText(getApplicationContext(), "Usuario não existe", Toast.LENGTH_SHORT).show();
                         }
 
@@ -145,11 +146,33 @@ public class MainActivity extends AppCompatActivity {
         checkSharedPreferences();
     }
 
-    public String getIdUsuario(){
+    private void signInAnonymously(final boolean usuario) {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                if (usuario) {
+                    Intent user_menu = new Intent(MainActivity.this, UserNavigation.class);
+                    user_menu.putExtra("id_Usuario", idUsuario);
+                    startActivity(user_menu);
+                } else {
+                    Intent admin_menu = new Intent(MainActivity.this, RestauranteNavigation.class);
+                    admin_menu.putExtra("id_Usuario", idUsuario);
+                    startActivity(admin_menu);
+                }
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
+    }
+
+    public String getIdUsuario() {
         return idUsuario;
     }
 
-    private void checkSharedPreferences(){
+    private void checkSharedPreferences() {
         String checkbox_SharedPreferences = pref.getString(getString(R.string.checkbox_SharedPreferences), "False");
         String email_SharedPreferences = pref.getString(getString(R.string.email_SharedPreferences), "");
         String senha_SharedPreferences = pref.getString(getString(R.string.senha_SharedPreferences), "");
@@ -157,9 +180,9 @@ public class MainActivity extends AppCompatActivity {
         email.setText(email_SharedPreferences);
         senha.setText(senha_SharedPreferences);
 
-        if(checkbox_SharedPreferences.equals("True")){
+        if (checkbox_SharedPreferences.equals("True")) {
             checkBox.setChecked(true);
-        }else{
+        } else {
             checkBox.setChecked(false);
         }
 

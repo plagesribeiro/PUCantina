@@ -1,32 +1,35 @@
 package com.plagesribeiro.pucantina;
 
+import com.google.firebase.storage.StorageReference;
+
 public class ListViewMenuAdapter {
-    private static int image;
-    private static String nome;
-    private static String preco;
+    private  byte[] image;
+    private  String nome;
+    private  String preco;
 
     public ListViewMenuAdapter() {
 
     }
 
-    public static int getImage() {
+    public byte[] getImage() {
         return image;
     }
-    public void setImage(int image) {
+
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public static String getNome() {
+    public  String getNome() {
         return nome;
     }
 
     public void setPreco(String preco) {
         this.preco = preco;
     }
-    public static String getPreco() {
+    public  String getPreco() {
         return preco;
     }
 }
