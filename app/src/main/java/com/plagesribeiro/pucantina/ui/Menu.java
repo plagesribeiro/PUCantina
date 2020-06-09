@@ -25,9 +25,14 @@ import com.plagesribeiro.pucantina.R;
 
 public class Menu extends Fragment {
 
+    public Menu(String id) {
+        idUsuario = id;
+    }
+
     private DatabaseReference banco = FirebaseDatabase.getInstance().getReference().child("produto");
     private RecyclerView mRecycleview;
     private ListAdapter mAdapter;
+    private String idUsuario;
 
     @Nullable
     @Override
@@ -60,7 +65,7 @@ public class Menu extends Fragment {
     }
 
     private void adapter() {
-        mAdapter = new ListAdapter(getActivity());
+        mAdapter = new ListAdapter(getActivity(), idUsuario);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycleview.setAdapter(mAdapter);
     }
