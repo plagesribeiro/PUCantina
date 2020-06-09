@@ -56,18 +56,6 @@ public class Pedido extends Fragment {
 
         botaoDeletar.setVisibility(View.GONE);
 
-        final Produto prod1 = new Produto();
-        prod1.setIdProduto("ID prod1");
-        prod1.setNome("Nome  prod1");
-        prod1.setDescricao("Desc prod1");
-        prod1.setValor("preco prod1");
-
-        final Produto prod2 = new Produto();
-        prod2.setIdProduto("ID prod2");
-        prod2.setNome("Nome  prod2");
-        prod2.setDescricao("Desc prod2");
-        prod2.setValor("preco prod2");
-
         listView.setAdapter(null);
 
         banco.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,11 +122,39 @@ public class Pedido extends Fragment {
                 botaoDeletar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), selectedItem.getValorTotal(), Toast.LENGTH_SHORT).show();
                         banco.child("pedido").child(selectedItem.getIdPedido()).setValue(null);
+                        atualizaListView();
                         botaoDeletar.setVisibility(View.GONE);
                     }
                 });
+            }
+        });
+    }
+
+    public void atualizaListView(){
+        listView.setAdapter(null);
+
+        banco.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<PedidoEntidade> pedidos = new ArrayList<PedidoEntidade>();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.child("pedido").getChildren()) {
+                    PedidoEntidade pedido = postSnapshot.getValue(PedidoEntidade.class);
+
+                    pedidos.add(pedido);
+
+                    pedido = null;
+                }
+
+                adapter = new ArrayAdapter<PedidoEntidade>(getActivity(),android.R.layout.simple_list_item_1, pedidos);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

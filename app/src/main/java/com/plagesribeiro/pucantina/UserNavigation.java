@@ -38,7 +38,8 @@ public class UserNavigation extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_menu:
-                        selectedFragment = new Menu();
+                        String idUs = getIntent().getStringExtra("id_Usuario");
+                        selectedFragment = new Menu(idUs);
                         break;
                     case R.id.navigation_carrinho:
                         String idUser = getIntent().getStringExtra("id_Usuario");
