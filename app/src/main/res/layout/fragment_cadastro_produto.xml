@@ -29,7 +29,7 @@
         android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="@string/valor"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/imageProduto_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
