@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -90,20 +91,14 @@ public class CadastroProduto extends Fragment {
                 String descricao = edtDescricao.getText().toString();
                 String valor = edtValor.getText().toString();
 
-
-                if ((nome.equals("") == false && descricao.equals("") == false && valor.equals("") == false )) {
-
+                if (!nome.equals("") && !descricao.equals("") && !valor.equals("")) {
                     Produto produto = new Produto();
 
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
                     produto.setValor(valor);
 
-
-                    cadastrarProduto(produto);
-                    cadastrarImagemProduto(imagem, nome);
-
-
+                    cadastrarImagemProduto(imagem, nome, produto);
                 }else{
                     Toast.makeText(getActivity(), "Preencha todos os dados", Toast.LENGTH_SHORT).show();
                 }
@@ -111,8 +106,7 @@ public class CadastroProduto extends Fragment {
         });
     }
 
-    private void cadastrarImagemProduto(ImageView imagem, String nome) {
-
+    private void cadastrarImagemProduto(ImageView imagem, String nome, final Produto produto) {
         StorageReference storageRef ;
         storageRef  = FirebaseStorage.getInstance().getReference();
         StorageReference mountainsRef = storageRef.child(nome+".jpg");
@@ -126,7 +120,7 @@ public class CadastroProduto extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imagemAsBytes = baos.toByteArray();
 
-        UploadTask uploadTask = mountainsRef.putBytes(imagemAsBytes);
+        UploadTask uploadTask = mountainImagesRef.putBytes(imagemAsBytes);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -137,6 +131,12 @@ public class CadastroProduto extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+                if(downloadUri.isSuccessful()){
+                    String generatedFilePath = downloadUri.getResult().toString();
+                    produto.setUrlImagem(generatedFilePath);
+                    cadastrarProduto(produto);
+                }
                 Toast.makeText(getActivity(), "Foto cadastrada com sucesso.", Toast.LENGTH_SHORT).show();
             }
         });

@@ -13,6 +13,7 @@
     <string name="buscarImagem">Buscar Imagem na Galeria</string>
     <string name="atualizar">Atualizar</string>
     <string name="finalizar">Finalizar Pedido</string>
+    <string name="addCarrinho">Comprar</string>
 
     <string name="checkbox_SharedPreferences">com.plagesribeiro.pucantina.checkbox_SharedPreferences</string>
     <string name="email_SharedPreferences">com.plagesribeiro.pucantina.email_SharedPreferences</string>

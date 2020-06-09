@@ -4,7 +4,7 @@ package com.plagesribeiro.pucantina;
 import androidx.annotation.NonNull;
 
 public class Produto {
-    private String idProduto, valor, nome, descricao;
+    private String idProduto, valor, nome, descricao, urlImagem;
 
     public void Produto() {}
 
@@ -45,4 +45,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
+    }
 }
